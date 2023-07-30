@@ -1,0 +1,1 @@
+This repo contains multiple Data Structures and Algorithms problems, as well as competitive prgramming problems, which are solved in multiple languages
