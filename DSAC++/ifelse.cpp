@@ -10,12 +10,15 @@ int main(){
   if (a>b){
     if (a>c){
       cout << "This is the maximum number : " << a << endl;
-    } else{
+    } 
+    else {
       cout << "This is the maximum number : " << c << endl;
     }
-  } else if (b>c){
+  } 
+  else if (b>c) {
     cout << "This is the maximum number : " << b << endl;
-  } else {
+  } 
+  else {
     cout << "This is the maximum number : " << c <<endl;
   }
 
