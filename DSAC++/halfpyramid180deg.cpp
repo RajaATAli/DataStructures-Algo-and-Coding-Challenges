@@ -1,0 +1,1 @@
+// Half Pyramid with 180 deg rotation

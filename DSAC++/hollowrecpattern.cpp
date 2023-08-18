@@ -9,8 +9,17 @@ int main(){
   int row,column;
   cin >> row >> column;
 
-  
+  for (int r = 1; r <= row; r++){
+    for (int c = 1; c <= column; c++){
+      if (r == 1 || r == row || c == 1 || c == column){
+        cout << "*";
+      }
+      else {
+        cout << " ";
+      }
+    }
+    cout << endl;
+  }
 
-  
   return 0;
 }
