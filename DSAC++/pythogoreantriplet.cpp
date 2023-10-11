@@ -28,7 +28,6 @@ bool triplet(int x, int y, int z){
     return false;
   }
 }
-
 int main(){
   int x,y,z;
   cin >> x >> y >> z;
