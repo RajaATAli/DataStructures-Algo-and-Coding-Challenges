@@ -5,6 +5,7 @@
 * Decimal to Binary
 * Decimal to Octal
 * Decimal to Hexadecimal
+* Adding two binary numbers
 */
 
 #include <iostream>
@@ -79,62 +80,155 @@ int HexaToDecimal(std::string hexadecimal){
 }
 
 
+std::string DecimalToBinary(int decimal){
+  std::string binary;
+  if (decimal == 0){
+    return 0;
+  }
+  while (decimal > 0){
+    int remainder = decimal % 2; // Either 0 or 1
+    // Prepending the remainder
+    binary = std::to_string(remainder) + binary; // At the start binary is an empty string
+    decimal = decimal / 2;
+  }
+  return binary;
+}
+
+std::string DecimalToOctal(int decimal) {
+    std::string octal;
+    if (decimal == 0) {
+        return "0";
+    }
+    while (decimal > 0) {
+        int remainder = decimal % 8; // Remainder can be 0-7
+        // Prepending the remainder
+        octal = std::to_string(remainder) + octal; // At the start octal is an empty string
+        decimal = decimal / 8; // Dividing by 8 for octal conversion
+    }
+    return octal;
+}
+
+std::string DecimalToHexa(int decimal){
+  std::string hexadecimal;
+  if (decimal == 0) {
+        return "0";
+  }
+  while (decimal > 0){
+    int remainder = decimal % 16; // Remainder from 0-15
+    char hexChar;
+    if (remainder < 10){
+      hexChar = remainder + '0'; // 0 = 48 in ASCII
+    } else {
+      hexChar = (remainder - 10) + 'A'; // A = 65 in ASCII
+    }
+    // Prepending
+    hexadecimal = hexChar + hexadecimal;
+    decimal /= 16;
+  }
+  return hexadecimal;
+}
+
+std::string BinaryAddition(std::string binary, std::string binary2) {
+    std::string result;
+    int carry = 0;
+
+    // Pad the shorter binary string with leading zeros
+    int lengthDiff = std::abs(int(binary.length() - binary2.length()));
+    if (binary.length() > binary2.length()) {
+        binary2 = std::string(lengthDiff, '0') + binary2;
+    } else {
+        binary = std::string(lengthDiff, '0') + binary;
+    }
+
+    // Loop through the strings from the end (right to left)
+    for (int i = binary.length() - 1; i >= 0; i--) {
+        int bit1 = binary[i] - '0'; // Convert character to integer - subtract the ASCII value of 0
+        int bit2 = binary2[i] - '0'; // Convert character to integer
+
+        int sum = bit1 + bit2 + carry;
+        carry = sum / 2; // Update the carry (0 or 1)
+        result = char(sum % 2 + '0') + result; // Prepend the resulting bit to the result string
+    }
+
+    // If there's a carry left at the end, prepend it to the result
+    if (carry != 0) {
+        result = '1' + result;
+    }
+
+    return result;
+}
+
 
 int main() {
-  int choice;
-  int decimal;
-  std::string binary, hexadecimal, octal;
-  std::cout << "Welcome to the conversion calculator!" << std::endl;
-  std::cout << std::string(40, '=') << std::endl;
-  std::cout << std::endl; // Adds an extra line
-  std::cout << "Please enter your choice:" << std::endl;
-  std::cout << "1. Binary to Decimal Conversion:\n";
-  std::cout << "2. Octal to Decimal Conversion:\n";
-  std::cout << "3. Hexadecimal to Decimal Conversion:\n";
-  std::cout << "4. Decimal to Binary Conversion:\n";
-  std::cout << "5. Decimal to Octal Conversion:\n";
-  std::cout << "6. Decimal to Hexadecimal Conversion:\n";
-  std::cout << "7. Exit\n";
-  std:: cin >> choice;
+    int choice;
+    int decimal;
+    std::string binary, hexadecimal, octal, binary2;
 
+    std::cout << "Welcome to the conversion calculator!" << std::endl;
+    std::cout << std::string(40, '=') << std::endl;
+    std::cout << std::endl; // Adds an extra line
 
-  switch (choice)
-  {
-  case 1:
-    std::cout << "Enter a binary number: ";
-    std::cin >> binary;
-    std::cout << BinarytoDecimal(binary) << std::endl;
-    break;
-  case 2:
-    std::cout << "Enter an octal number: ";
-    std::cin >> octal;
-    std::cout << OctalToDecimal(octal) << std::endl;
-    break;
-  case 3:
-    std::cout << "Enter a hexadecimal number: ";
-    std::cin >> hexadecimal;
-    std::cout << HexaToDecimal(hexadecimal) << std::endl;
-    break;
-  /*  
-  case 4:
-    std::cout << "Enter a decimal number: ";
-    std::cin >> decimal;
-    std::cout << DecimalToBinary(decimal) << std::endl;
-    break;
-  case 5:
-    std::cout << "Enter a decimal number: ";
-    std::cin >> decimal;
-    std::cout << DecimalToOctal(decimal) << std::endl;
-    break;
-  case 6:
-    std::cout << "Enter a decimal number: ";
-    std::cin >> decimal;
-    std::cout << DecimalToHexa(decimal) << std::endl;
-    break;*/
-  case 7:
-    std::cout << "Thank you for using the conversion calculator!" << std::endl;
-    break;
+    while (true) {  // Infinite loop to return to the main menu
+      std::cout << "Please enter your choice:" << std::endl;
+      std::cout << "1. Binary to Decimal Conversion:\n";
+      std::cout << "2. Octal to Decimal Conversion:\n";
+      std::cout << "3. Hexadecimal to Decimal Conversion:\n";
+      std::cout << "4. Decimal to Binary Conversion:\n";
+      std::cout << "5. Decimal to Octal Conversion:\n";
+      std::cout << "6. Decimal to Hexadecimal Conversion:\n";
+      std::cout << "7. Binary Addition:\n";
+      std::cout << "8. Exit\n";
+      std::cin >> choice;
+
+      if (choice == 8) {
+        std::cout << "Thank you for using the conversion calculator!" << std::endl;
+        break;  // Exit the loop
+        }
+
+      switch (choice)
+      {
+      case 1:
+        std::cout << "Enter a binary number: ";
+        std::cin >> binary;
+        std::cout << BinarytoDecimal(binary) << std::endl;
+        break;
+      case 2:
+        std::cout << "Enter an octal number: ";
+        std::cin >> octal;
+        std::cout << OctalToDecimal(octal) << std::endl;
+        break;
+      case 3:
+        std::cout << "Enter a hexadecimal number: ";
+        std::cin >> hexadecimal;
+        std::cout << HexaToDecimal(hexadecimal) << std::endl;
+        break;
+      case 4:
+        std::cout << "Enter a decimal number: ";
+        std::cin >> decimal;
+        std::cout << DecimalToBinary(decimal) << std::endl;
+        break;
+      case 5:
+        std::cout << "Enter a decimal number: ";
+        std::cin >> decimal;
+        std::cout << DecimalToOctal(decimal) << std::endl;
+        break;
+      case 6:
+        std::cout << "Enter a decimal number: ";
+        std::cin >> decimal;
+        std::cout << DecimalToHexa(decimal) << std::endl;
+        break;
+      case 7:
+        std::cout << "Enter your first binary number";
+        std::cin >> binary;
+        std::cout << "Enter your second binary number";
+        std::cin >> binary2;
+        std::cout << BinaryAddition(binary, binary2) <<std::endl;
+        break;
+      case 8:
+        std::cout << "Thank you for using the conversion calculator!" << std::endl;
+        break;
+      }
+
   }
-
   return 0;
 }
