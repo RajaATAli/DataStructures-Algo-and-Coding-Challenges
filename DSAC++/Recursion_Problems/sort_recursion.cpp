@@ -11,11 +11,11 @@ bool sorted(int arr[], int n){
 
   // Recursive Case
   // Each recursive call should deal with a smaller part of the array than the previous call
-  
-  if (arr[0] < arr[1] && sorted(arr, n-2)){
+
+  if (arr[0] < arr[1] && sorted(arr + 1, n - 1)){
     return true;
   }
-
+  return false;
 }
 
 int main(){
